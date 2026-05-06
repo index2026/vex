@@ -132,6 +132,7 @@ const generateStudents = (schoolId: string, count: number): Student[] => {
     const lastName = arabicLastNames[Math.floor(Math.random() * arabicLastNames.length)];
     const grade = grades[Math.floor(Math.random() * grades.length)];
     const section = sections[Math.floor(Math.random() * sections.length)];
+    const classId = `class-${schoolId}-${grade}-${section}`;
 
     students.push({
       id: `student-${schoolId}-${i + 1}`,
@@ -140,6 +141,7 @@ const generateStudents = (schoolId: string, count: number): Student[] => {
       nameAr: `${firstName} ${lastName}`,
       grade,
       className: section,
+      classId,
       tenantId: schoolId,
       parentName: `والد ${firstName}`,
       parentPhone: `+9665${Math.floor(10000000 + Math.random() * 90000000)}`,

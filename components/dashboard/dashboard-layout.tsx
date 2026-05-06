@@ -9,7 +9,7 @@ import type { UserRole } from '@/lib/types';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  allowedRoles: UserRole[];
+  allowedRoles?: UserRole[];
 }
 
 export function DashboardLayout({ children, allowedRoles }: DashboardLayoutProps) {
@@ -20,8 +20,7 @@ export function DashboardLayout({ children, allowedRoles }: DashboardLayoutProps
     if (!isLoading) {
       if (!isAuthenticated) {
         router.replace('/login');
-      } else if (user && !allowedRoles.includes(user.role)) {
-        // Redirect to appropriate dashboard
+      } else if (user && allowedRoles && !allowedRoles.includes(user.role)) {
         switch (user.role) {
           case 'super_admin':
             router.replace('/super-admin');
@@ -50,7 +49,9 @@ export function DashboardLayout({ children, allowedRoles }: DashboardLayoutProps
     );
   }
 
-  if (!isAuthenticated || !user || !allowedRoles.includes(user.role)) {
+  const isAllowed = isAuthenticated && user && (!allowedRoles || allowedRoles.includes(user.role));
+
+  if (!isAllowed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -59,9 +60,9 @@ export function DashboardLayout({ children, allowedRoles }: DashboardLayoutProps
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background overflow-hidden">
       <DashboardSidebar />
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden min-w-0">
         {children}
       </main>
     </div>

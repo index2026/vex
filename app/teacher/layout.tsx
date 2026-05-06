@@ -1,11 +1,13 @@
-"use client"
-
-import { DashboardLayout } from "@/components/dashboard"
+import { DashboardLayout } from '@/components/dashboard';
 
 export default function TeacherLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return <DashboardLayout>{children}</DashboardLayout>
+  return (
+    <DashboardLayout allowedRoles={['teacher']}>
+      {children}
+    </DashboardLayout>
+  );
 }

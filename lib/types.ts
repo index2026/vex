@@ -47,6 +47,7 @@ export interface Student {
   nameAr: string;
   grade: GradeLevel;
   className: string; // e.g., "A", "B", "C"
+  classId?: string; // Reference to Class id
   tenantId: string;
   parentName: string;
   parentPhone: string;
